@@ -70,9 +70,13 @@ func main() {
 	// Record end time
 	endTime := time.Now()
 
+	// Check the contents of the queue after enqueueing
+	//viewQueueContents(pool, queueName)
+
 	// Calculate and print the elapsed time
 	elapsedTime := endTime.Sub(startTime)
 	fmt.Printf("Time taken to enqueue objects: %v\n", elapsedTime)
+
 }
 
 func createAndStoreObjectsInQueue(pool *redis.Client, queueName string, numObjects int) {
@@ -108,6 +112,25 @@ func createAndStoreObjectsInQueue(pool *redis.Client, queueName string, numObjec
 	fmt.Printf("Time taken to insert %d objects: %v\n", numObjects, insertElapsedTime)
 
 	fmt.Printf("Enqueued %d objects in Redis\n", numObjects)
+}
+
+func viewQueueContents(pool *redis.Client, queueName string) {
+	// Retrieve all items from the list (queue)
+	items, err := pool.LRange(queueName, 0, -1).Result()
+	if err != nil {
+		log.Println("Failed to retrieve items from Redis:", err)
+		return
+	}
+
+	// Print the items
+	fmt.Println("Items in the queue:")
+	if len(items) == 0 {
+		fmt.Println("Queue is empty.")
+	} else {
+		for _, item := range items {
+			fmt.Println(item)
+		}
+	}
 }
 
 func generateRandomName() string {
