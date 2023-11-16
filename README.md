@@ -7,7 +7,7 @@
 6. Established a connection pool to minimize the time required for insertion.
 7. Implemented a switch function that allows users to select the desired quantity of objects to generate and store in Redis.
 8. A menu is desplayed with choices, For example, entering '1' produces 100,000 objects, '2' produces 200,000 objects, '3' produces 300,000 objects, and so forth.
-
+<br/>
 
 **Benchmarks:** <br /><br />
 1. To insert 100,000 objects in the database, the createAndStoreObjectsInQueue function takes 1,443,780 (1.4 million) microseconds on average, equivalent to 1.44378 seconds.
